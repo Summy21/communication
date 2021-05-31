@@ -93,14 +93,14 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
           children: [
             TextFormField(
               style: TextStyle(
-                color: widget.background,
+                color: Colors.black,
                 fontSize: 17.0,
               ),
               decoration: InputDecoration(
                 labelText: widget.value1,
                 filled: false,
                 labelStyle: TextStyle(
-                  color: Colors.black,
+                  color: widget.background,
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -193,13 +193,13 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
       FlatButton(
         child: Text(widget.negativeText ?? 'Cancelar'),
         onPressed: () {
+          widget.controller.text = '';
           Navigator.of(context, rootNavigator: true).pop();
         },
       ),
       FlatButton(
         child: Text(widget.affirmativeText ?? 'Aceptar'),
         onPressed: () {
-          // _textEditingController.text = pastedText;
           Navigator.of(context, rootNavigator: true).pop();
         },
       ),
