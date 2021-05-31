@@ -52,15 +52,20 @@ class CommunicationComponent extends StatefulWidget {
   final String negativeText;
   final String affirmativeText;
   final Function onTap;
+  final Function onSuccess;
+  final Function onError;
   TextEditingController controller;
   final bool changeValue;
 
+  ///Ambas funciones reciben un String
   CommunicationComponent(
       {this.value1,
       this.background,
       this.negativeText,
       this.affirmativeText,
       this.onTap,
+      this.onSuccess, //ruta, ver por donde proseguir: PROCEED_ENROLLMENT, CANT_VERIFY_USER, USER_ALREADY_ENROLLED
+      this.onError, //interceptar errores y convertilo a String y pasarlo a la función
       this.controller,
       this.changeValue = false,
       Key key})
@@ -95,7 +100,7 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
                 labelText: widget.value1,
                 filled: false,
                 labelStyle: TextStyle(
-                  color: widget.background,
+                  color: Colors.black,
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -109,27 +114,22 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
               ),
               controller: widget.controller,
             ),
-            Row(
-              children: [
-                RaisedButton(
-                    textColor: Colors.white,
-                    color: widget.background,
-                    child: Text('Aceptar'),
-                    onPressed: () {
-                      if (widget.changeValue) {
-                        widget.controller.text =
-                            '${widget.controller.text} valor editado';
-                      }
-                      print('controlador:: ${widget.controller}');
-                      print(
-                          'widget.controller.text:: ${widget.controller.text}');
-                      if (widget.controller.text != null &&
-                          widget.controller.text != '') {
-                        _showDialog(widget.controller.text);
-                      }
-                    }),
-              ],
-            )
+            RaisedButton(
+                textColor: Colors.white,
+                color: widget.background,
+                child: Text('Aceptar'),
+                onPressed: () {
+                  if (widget.changeValue) {
+                    widget.controller.text =
+                        '${widget.controller.text} valor editado';
+                  }
+                  print('controlador:: ${widget.controller}');
+                  print('widget.controller.text:: ${widget.controller.text}');
+                  if (widget.controller.text != null &&
+                      widget.controller.text != '') {
+                    _showDialog(widget.controller.text);
+                  }
+                })
           ],
         ),
       ),
