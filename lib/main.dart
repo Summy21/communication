@@ -1,15 +1,31 @@
-import 'package:communication_project/example_page.dart';
-import 'package:communication_project/scope_model/main_model.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   TextEditingController textEditingController1 = TextEditingController();
   TextEditingController textEditingController2 = TextEditingController();
+
+  @override
+  void initState() {
+    textEditingController1.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController1.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +81,12 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextFormField(
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextFormField(
               style: TextStyle(
                 color: widget.background,
                 fontSize: 17.0,
@@ -91,26 +108,32 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
                     borderSide: BorderSide(color: Colors.black54)),
               ),
               controller: widget.controller,
-              onChanged: (String value) {
-                setState(() {
-                  widget.controller.text = value;
-                  if (widget.changeValue) {
-                    widget.controller.text =
-                        '${widget.controller.text} valor editado';
-                  }
-                  print('widget.controller.text:: ${widget.controller.text}');
-                });
-              },
             ),
-          ),
+            Row(
+              children: [
+                RaisedButton(
+                    textColor: Colors.white,
+                    color: widget.background,
+                    child: Text('Aceptar'),
+                    onPressed: () {
+                      if (widget.changeValue) {
+                        widget.controller.text =
+                            '${widget.controller.text} valor editado';
+                      }
+                      print('controlador:: ${widget.controller}');
+                      print(
+                          'widget.controller.text:: ${widget.controller.text}');
+                      if (widget.controller.text != null &&
+                          widget.controller.text != '') {
+                        _showDialog(widget.controller.text);
+                      }
+                    }),
+              ],
+            )
+          ],
         ),
-        onTap: () async {
-          print('controlador:: ${widget.controller}');
-          print('controlador text:: ${widget.controller.text}');
-          if (widget.controller.text != null && widget.controller.text != '') {
-            _showDialog(widget.controller.text);
-          }
-        });
+      ),
+    );
   }
 
   void _assignController() {

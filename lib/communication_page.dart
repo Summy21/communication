@@ -62,6 +62,7 @@ class _CommunicationComponentState extends State<CommunicationComponent> {
               ),
               controller: widget.controller,
               onChanged: (String value) {
+                print('value::: $value');
                 setState(() {
                   widget.controller.text = value;
                   if (widget.changeValue) {
