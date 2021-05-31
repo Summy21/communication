@@ -44,6 +44,8 @@ class _ExamplePageState extends State<ExamplePage> {
               background: Colors.amberAccent,
               controller: textEditingController2,
               changeValue: true,
+              affirmativeText: 'SI',
+              negativeText: 'NO',
             ),
           ],
         ));
